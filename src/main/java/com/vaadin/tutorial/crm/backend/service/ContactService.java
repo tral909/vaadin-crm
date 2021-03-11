@@ -4,8 +4,10 @@ import com.vaadin.tutorial.crm.backend.entity.Company;
 import com.vaadin.tutorial.crm.backend.entity.Contact;
 import com.vaadin.tutorial.crm.backend.repository.CompanyRepository;
 import com.vaadin.tutorial.crm.backend.repository.ContactRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -28,18 +30,31 @@ public class ContactService {
         this.companyRepository = companyRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Contact> findAll() {
         return contactRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public List<Contact> findAll(String filterString) {
+        if (StringUtils.isNotBlank(filterString)) {
+            return contactRepository.search(filterString);
+        } else {
+            return contactRepository.findAll();
+        }
+    }
+
+    @Transactional(readOnly = true)
     public long count() {
         return contactRepository.count();
     }
 
+    @Transactional
     public void delete(Contact contact) {
         contactRepository.delete(contact);
     }
 
+    @Transactional
     public void save(Contact contact) {
         if (contact == null) {
             LOGGER.log(Level.SEVERE, "Contact is null. Are you sure you have connected your form to the application?");
