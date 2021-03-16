@@ -20,10 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 @PageTitle("Contacts | Vaadin CRM")
 public class ListView extends VerticalLayout {
 
-    private final ContactService contactService;
-    private final Grid<Contact> grid = new Grid<>(Contact.class);
-    private final TextField filterText = new TextField();
-    private final ContactForm form;
+    ContactService contactService;
+    Grid<Contact> grid = new Grid<>(Contact.class);
+    TextField filterText = new TextField();
+    ContactForm form;
 
     @Autowired
     public ListView(ContactService contactService, CompanyService companyService) {
