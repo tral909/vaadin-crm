@@ -43,3 +43,7 @@ a[highlight] {
     font-size: 4em;
     margin: 1em 0;
 }
+
+#vaadin-license-validation-notification-vaadin-chart {
+    display:none;
+}
